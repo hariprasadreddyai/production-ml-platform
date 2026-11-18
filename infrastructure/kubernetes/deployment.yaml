@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlserve-api
+  labels:
+    app: mlserve-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mlserve-api
+  template:
+    metadata:
+      labels:
+        app: mlserve-api
+    spec:
+      containers:
+        - name: api
+          image: mlserve:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "1Gi"
+            limits:
+              cpu: "2"
+              memory: "4Gi"
+          env:
+            - name: MLFLOW_TRACKING_URI
+              value: "http://mlflow:5000"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
