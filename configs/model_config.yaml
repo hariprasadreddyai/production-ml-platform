@@ -1,0 +1,16 @@
+model:
+  name: "distilbert-base-uncased"
+  num_labels: 3
+  max_length: 512
+
+training:
+  batch_size: 32
+  learning_rate: 2.0e-5
+  epochs: 3
+  warmup_steps: 500
+  weight_decay: 0.01
+  distributed: false
+
+mlflow:
+  tracking_uri: "http://localhost:5000"
+  experiment_name: "text-classifier"
