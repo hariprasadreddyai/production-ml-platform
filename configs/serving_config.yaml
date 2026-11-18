@@ -1,0 +1,13 @@
+serving:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 4
+
+ab_testing:
+  enabled: true
+  stable_weight: 0.9
+  canary_weight: 0.1
+
+rate_limiting:
+  requests_per_minute: 1000
+  burst: 50
